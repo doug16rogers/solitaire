@@ -37,11 +37,13 @@ package body Solitaire_Operations is
       -- Returns the index in Deck of Value
       -- Note: raises Program_Error if Value not in Deck
    begin -- Find
+      -- pragma Warnings (Off, "*statement missing following this statement");   -- GNAT-specific.
       Search : for I in Deck'range loop
          if Deck (I) = Value then
             return I;
          end if;
-      end loop Search;
+       end loop Search;
+       -- pragma Warnings (On, "*statement missing following this statement");   -- GNAT-specific.
    end Find;
    
    procedure End_Joker_To_Front (Index : in out Card_Value; Deck : in out Deck_List) is
