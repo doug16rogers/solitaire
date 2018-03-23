@@ -34,7 +34,10 @@ x64
 .DS_Store
 
 # Local targets:
+*.exe
 decrypt
 encrypt
 key_decrypt
 key_encrypt
+*.out
+solitaire.zip

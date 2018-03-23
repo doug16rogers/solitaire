@@ -1,17 +1,13 @@
 Ada Implementation of Bruce Schneier's Solitaire Encryption Algorithm
 =====================================================================
 
-This repository file contains an Ada (ISO/IEC 8652:1995) implementation of
-the Solitaire encryption algorithm, designed by Bruce Schneier and described
-in Neal Stephenson's novel, _Cryptonomicon_. See
+See LICENSE for copyright and terms of use for these files.
+
+This repository contains an Ada (ISO/IEC 8652:1995) implementation of the
+Solitaire encryption algorithm as designed by Bruce Schneier and described in
+Neal Stephenson's novel, _Cryptonomicon_. See
 
   https://www.schneier.com/academic/solitaire/
-
-These files are Copyright (C) 1999-2018 by Jeffrey R. Carter and Doug
-Rogers. We grant permission for unlimited reproduction and distribution of
-these files provided that all files are unchanged and this copyright notice
-is included with all copies. Please send comments and error reports to
-jrcarter@acm.org.
 
 This implementation was originally tested with the GNAT 3.13p compiler on
 Windows 98 and with GNAT 3.13p on Linux/Pentium. Most recently it was tested
@@ -26,20 +22,24 @@ long filenames.
 Installing an Ada Compiler
 --------------------------
 
-GNAT is available from https://www.adacore.com/download, or use
+GNAT is available from https://www.adacore.com/download. Or you may use your
+Linux distribution's package manager.
+
+For Debian distros (Ubuntu, Mint, etc.), use:
 
 ```shell
     $ sudo apt-get install gnat
 ```
-on Debian Linux distributions (Ubuntu, Mint, etc.) or
+
+For Redhat systems (CentOS, etc.), use:
 ```shell
     $ sudo yum install gcc-gnat
 ```
-on Redhat system (CentOS).
 
-For Windows your options, among others, are to use AdaCore's x86 Windows
-package mentioned above or to install cygwin and select the gnat gcc-ada
-package in the installer downloaded from https://www.cygwin.com/install.html.
+For Windows systems there are a few options, such as AdaCore's x86 Windows
+package mentioned above or the Cygwin Unix-like envrionment on Windows. A
+Cygwin installer is available at https://www.cygwin.com/install.html. When
+using Cygwin, select at least packages gcc, git, make, openssh, and gcc-ada.
 
 Source Code Design
 ------------------
@@ -71,12 +71,12 @@ Program Decrypt reads a line containing the textual representation of a deck
 followed by a line containing ciphertext from standard input. It decrypts the
 ciphertext using the input deck and writes the plaintext to standard output.
 
-Program Key_Encrypt reads a line a passphrase followed by a line containing
-plaintext from standard input. It keys the deck with the passphrase. It
-removes non-letter characters from the plaintext, converts the plaintext to
-upper case, and pads the plain text with X's to a multiple of 5 characters in
-length. It then encrypts the plaintext using the keyed deck and writes the
-ciphertext to standard output.
+Program Key_Encrypt reads a line containing a passphrase followed by a line
+containing plaintext from standard input. It keys the deck with the
+passphrase. It removes non-letter characters from the plaintext, converts the
+plaintext to upper case, and pads the plain text with X's to a multiple of 5
+characters in length. It then encrypts the plaintext using the keyed deck and
+writes the ciphertext to standard output.
 
 Program Key_Decrypt reads a line containing a passphrase followed by a line
 containing ciphertext from standard input. It keys the deck with the
@@ -88,8 +88,8 @@ Building Solitaire
 
 The easiest way to build the software is to run make, which simply invokes
 gnatmake for the four executables. There are also 'clean' and 'test' targets
-that may be used to tidy up the working directory or run the single test of
-encrypt/decrypt.
+that may be used to tidy up the working directory or to run some simple
+tests.
 
 ```shell
     $ make clean
@@ -123,6 +123,13 @@ encrypt/decrypt.
     cat message.plain | ./encrypt > test.enc.out
     (head -1 message.plain; cat test.enc.out) | ./decrypt > test.dec.out
     echo YOURMOTHERWASAHAMPSTERANDYOURFATHERSMELTOFELDERBERRIESX | diff - test.dec.out
+    cat null_test.plain | ./encrypt > test.enc.out
+    (head -1 null_test.plain; cat test.enc.out) | ./decrypt > test.dec.out
+    echo AAAAAAAAAAAAAAA | diff - test.dec.out
+    cat foo_key.plain | ./key_encrypt > test.enc.out
+    (head -1 foo_key.plain; cat test.enc.out) | ./key_decrypt > test.dec.out
+    echo AAAAAAAAAAAAAAA | diff - test.dec.out
+    ok
 ```
 
 Running With Test Files
@@ -159,3 +166,9 @@ this ciphertext. Running
     $ ./key_decrypt < foo_key.cipher
 ```
 should display 15 A's.
+
+Contacts
+--------
+
+Please send comments and error reports to jrcarter@acm.org or
+doug.16.rogers@gmail.com.

@@ -24,9 +24,24 @@ test: $(TARGETS)
 	cat message.plain | ./encrypt > test.enc.out
 	(head -1 message.plain; cat test.enc.out) | ./decrypt > test.dec.out
 	echo YOURMOTHERWASAHAMPSTERANDYOURFATHERSMELTOFELDERBERRIESX | diff - test.dec.out
+	cat null_test.plain | ./encrypt > test.enc.out
+	(head -1 null_test.plain; cat test.enc.out) | ./decrypt > test.dec.out
+	echo AAAAAAAAAAAAAAA | diff - test.dec.out
+	cat foo_key.plain | ./key_encrypt > test.enc.out
+	(head -1 foo_key.plain; cat test.enc.out) | ./key_decrypt > test.dec.out
+	echo AAAAAAAAAAAAAAA | diff - test.dec.out
+	@echo ok
+
+ZIP_FILE = solitaire.zip
+.PHONY: zip
+zip: $(ZIP_FILE)
+
+FILES_TO_ZIP = README.md LICENSE $(wildcard *.ads *.adb *.cipher *.plain)
+$(ZIP_FILE): $(FILES_TO_ZIP)
+	rm -f $@
+	zip $@ $(FILES_TO_ZIP)
 
 .PHONY: clean
 clean:
-	rm -f $(TARGET_NAMES) *.exe
+	rm -f $(TARGET_NAMES) *.exe solitaire.zip
 	rm -f *.o *.ali *~ *.bak *.out
-
