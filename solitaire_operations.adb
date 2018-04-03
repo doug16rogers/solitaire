@@ -42,8 +42,8 @@ package body Solitaire_Operations is
          if Deck (I) = Value then
             return I;
          end if;
-       end loop Search;
-       -- pragma Warnings (On, "*statement missing following this statement");   -- GNAT-specific.
+      end loop Search;
+      -- pragma Warnings (On, "*statement missing following this statement");   -- GNAT-specific.
    end Find;
    
    procedure End_Joker_To_Front (Index : in out Card_Value; Deck : in out Deck_List) is
